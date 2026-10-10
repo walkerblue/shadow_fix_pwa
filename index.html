@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f7f5"><link rel="manifest" href="./manifest.webmanifest">
+<title>Shadow Fix</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f7f7f5;color:#242424;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif}
+main{max-width:650px;margin:auto;padding:22px 18px 45px}h1{margin:5px 0}p{color:#666;line-height:1.55;font-size:14px}
+.panel{background:white;border:1px solid #e8e8e8;border-radius:16px;padding:17px;margin-top:16px}
+label{display:block;font-weight:600;margin:14px 0 8px}input[type=file]{width:100%}input[type=range]{width:100%}
+button,.save{display:block;width:100%;border:0;border-radius:12px;padding:14px;background:#252525;color:white;font-size:16px;text-align:center;text-decoration:none;margin-top:14px}
+button:disabled{opacity:.4}.save{background:#e9e9e9;color:#222}canvas{width:100%;height:auto;display:block;border-radius:10px;background:#eee}
+small{color:#666}.hidden{display:none}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid div{min-width:0}
+</style></head><body><main><h1>Shadow Fix</h1><p>影のある部分を推定して明るさを補正します。画像は端末内で処理し、サーバーには送信しません。</p>
+<div class="panel"><label for="photo">写真を選択</label><input id="photo" type="file" accept="image/*">
+<label for="strength">補正強度：<span id="strengthValue">65</span>%</label><input id="strength" type="range" min="0" max="100" value="65">
+<label for="radius">影の大きさ：<span id="radiusValue">中</span></label><input id="radius" type="range" min="1" max="3" value="2" step="1">
+<button id="run" disabled>影を補正する</button><p id="status" role="status">写真を選択してください。</p></div>
+<div class="panel hidden" id="results"><div class="grid"><div><label>元画像</label><canvas id="before"></canvas></div><div><label>補正後</label><canvas id="after"></canvas></div></div><a class="save" id="save" download="shadow-fixed.png">画像を保存</a></div>
+<p>※これはAIによる物体認識ではありません。暗い模様や黒い物体も影と誤認する場合があります。均一な壁・机などの広い影で試してください。</p></main>
+<script src="./app.js"></script></body></html>
