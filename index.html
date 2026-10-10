@@ -15,6 +15,6 @@ small{color:#666}.hidden{display:none}.grid{display:grid;grid-template-columns:1
 <label for="strength">補正強度：<span id="strengthValue">65</span>%</label><input id="strength" type="range" min="0" max="100" value="65">
 <label for="radius">影の大きさ：<span id="radiusValue">中</span></label><input id="radius" type="range" min="1" max="3" value="2" step="1">
 <button id="run" disabled>影を補正する</button><p id="status" role="status">写真を選択してください。</p></div>
-<div class="panel hidden" id="results"><div class="grid"><div><label>元画像</label><canvas id="before"></canvas></div><div><label>補正後</label><canvas id="after"></canvas></div></div><a class="save" id="save" download="shadow-fixed.png">画像を保存</a></div>
+<div class="panel hidden" id="results"><div class="grid"><div><label>元画像</label><canvas id="before"></canvas></div><div><label>補正後</label><canvas id="after"></canvas></div></div><button id="share" type="button" disabled>写真に保存（共有メニュー）</button><a class="save" id="save" download="shadow-fixed.png">ファイルにダウンロード</a></div>
 <p>※これはAIによる物体認識ではありません。暗い模様や黒い物体も影と誤認する場合があります。均一な壁・机などの広い影で試してください。</p></main>
 <script src="./app.js"></script></body></html>

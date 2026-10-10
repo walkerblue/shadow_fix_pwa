@@ -1,5 +1,6 @@
 const $=id=>document.getElementById(id);
 let original=null;
+let latestBlob=null;
 const strength=$('strength'),radius=$('radius');
 strength.oninput=()=>{$('strengthValue').textContent=strength.value};
 radius.oninput=()=>{$('radiusValue').textContent=['','小','中','大'][+radius.value]};
@@ -72,6 +73,7 @@ $('run').onclick=async()=>{
  canvas.toBlob(blob=>{
   if(!blob){$('status').textContent='保存画像の生成に失敗しました。';return}
   if($('save').dataset.url)URL.revokeObjectURL($('save').dataset.url);
+  latestBlob=blob; $('share').disabled=false;
   const url=URL.createObjectURL(blob);$('save').href=url;$('save').dataset.url=url;
   $('status').textContent='補正が完了しました。';
  },'image/png');
@@ -79,3 +81,16 @@ $('run').onclick=async()=>{
  finally{$('run').disabled=false}
 };
 if('serviceWorker' in navigator && location.protocol!=='file:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
+$('share').onclick=async()=>{
+ if(!latestBlob)return;
+ const file=new File([latestBlob],'shadow-fixed.png',{type:'image/png'});
+ try{
+  if(navigator.canShare?.({files:[file]})){
+   await navigator.share({files:[file]});
+   $('status').textContent='共有画面で「画像を保存」を選択してください。';
+  }else{
+   $('status').textContent='このブラウザでは画像共有に対応していません。「ファイルにダウンロード」を利用してください。';
+  }
+ }catch(err){if(err.name!=='AbortError')$('status').textContent='共有できませんでした: '+err.message;}
+};
